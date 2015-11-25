@@ -120,12 +120,58 @@ address_akun deleteFirstAkun(list_akun &Akun){
     }
 }
 
-address_akun deleteLastAkun(list_akun &Akun){
-
+address_akun deleteLastAkun (list_akun &A, elmakun &P)
+{
+    elmakun &Q;
+    if (A.first == NULL)
+    {
+        cout<<"There is no data to delete!"<<endl;
+    }
+    else
+    {
+        Q = A.first;
+        if (Q->next == NULL)
+        {
+            delete q;
+            A.first = NULL;
+        }
+        else
+        {
+            while( (Q->next)->next != NULL)
+            {
+                Q = Q->next;
+            }
+            P = Q->next;
+            P->next = NULL;
+            Q->next = NULL;
+            delete p;
+        }
+        cout<<endl<<"Delete Last Data Success!"<<endl;
+    }
 }
 
 address_akun deleteNextAkun(list_akun &Akun, infotype_akun detail_akun){
+    elmakun q = Akun.first;
 
+    while(q != NULL)
+     {
+        if(q->info_akun.id_akun == detail_akun.id_akun)
+            break;
+        else
+            q = q->next;
+     }
+     if(q == NULL)
+        cout<<"ID not found!"<<endl;
+     else if(q->next == NULL)
+        cout<<"Founded ID is the last account, nothing to delete!"<<endl;
+     else
+     {
+        elmakun r = next(q);
+        next(q) = next(r);
+        next(r) = NULL;
+        delete r;
+        cout<<"Delete Success!";
+     }
 }
 
 void editAkun(list_akun &Akun){
@@ -174,7 +220,63 @@ void addStatus(list_akun &Akun, list_status &Status){
 
 }
 
+void insertFirstStatus (list_status &S, elmstatus &P)
+{
+    if(A.first == NULL)
+    {
+        A.first = P;
+        A.last = P;
+    }
+    else
+    {
+        P->next = A.first;
+        (P->next)->prev = P;
+        A.first = P;
+    }
+}
+
 void viewStatus(list_akun Akun, list_status Status){
+    //viewakun
+    elmakun P;
+    if (Akun.first == NULL)
+    {
+        cout<<"View Akun"<<endl;
+        cout<<"Empty List Akun"<<endl;
+    }
+    else
+    { //string id_akun,nama,tgl_lahir,username,password
+        cout<<"View Akun"<<endl;
+        P = Akun.first;
+        while(P != NULL)
+        {
+            cout<<"ID Akun : "<<P->info_akun.id_akun<<endl;
+            cout<<"Nama : "<<P->info_akun.nama<<endl;
+            cout<<"Tgl Lahir : "<<P->info_akun.tgl_lahir<<endl;
+            cout<<"Username : "<<P->info_akun.username<<endl;
+            cout<<"Password : "<<P->info_akun.password<<endl;
+            P = P->next;
+        }
+    }
+
+    //viewstatus
+    elmstatus P;
+    if(Status.first == NULL)
+    {
+        cout<<"View Status"<<endl;
+        cout<<"Empty List Status"<<endl;
+    }
+    else
+    {
+        cout<<"View Status"<<endl;
+        P = Status.first;
+        while (P != NULL)
+        {//string id_status, tanggal, status;
+            cout<<"ID Status : "<<P->info_status.id_status<<endl;
+            cout<<"Tanggal : "<<P->info_status.tanggal<<endl;
+            cout<<"Status : "<<P->info_status.status<<endl;
+            P = P->next;
+        }
+    }
 
 }
 
