@@ -1,4 +1,3 @@
-//isi source code nya disini yo
 #include "head.h"
 
 void addAkun (list_akun &A)
@@ -35,7 +34,7 @@ void insertFirstAkun (list_akun &A, address_akun P)
 
 void insertLastAkun (list_akun &A, address_akun P)
 {
-    address Q;
+    address_akun Q;
     Q=first(A);
     if(Q==NULL)
     {
@@ -53,20 +52,33 @@ void insertLastAkun (list_akun &A, address_akun P)
     }
 }
 
+void addStatus (list_status &S)
+{
+    first(S)=NULL;
+    last(S)=NULL;
+}
 
-void findAkun (list_akun A);
+void deletefirst_akun(list_akun &A,address_akun &P)
+{
 
-void editAkun (list_akun &A);
+    P=first(A);
+    if(P==NULL)
+    {
+        cout<<"Data Kosong"<<endl;
+    }
+    else
+    {
+        first(A)=next(first(A));
+        next(P)=NULL;
+        cout<<"ID Akun yang dihapus "<<info_akun(P).id_akun<<endl;
+    }
+}
 
-void addStatus (list_akun &A, list_status &S);
-
-void findStatus (list_akun A, list_status L);
-address_status deleteStatus (list_akun &A, list_status S);
-void viewStatus (list_akun A, list_status S);
-address_akun deleteAkun (list_akun &A);
-int count_akun (list_akun A);
-
-int count_status (list_akun A,list_status S);
-void sort_akun (list_akun &A);
-void sort_status (list_status &S);
-void insertFirstStatus (list_status &S);
+void deleteLast_status(list_status &S,address_status *P)
+{
+    P=last(S);
+    last(S)=prev(last(S));
+    prev(P)=NULL;
+    next(last(S))=NULL;
+    cout<<"ID Status yang dihapus "<<info_status(P).id_status<<endl;
+}
