@@ -222,16 +222,16 @@ void addStatus(list_akun &Akun, list_status &Status){
 
 void insertFirstStatus (list_status &S, elmstatus &P)
 {
-    if(A.first == NULL)
+    if(S.first == NULL)
     {
-        A.first = P;
-        A.last = P;
+        S.first = P;
+        S.last = P;
     }
     else
     {
-        P->next = A.first;
+        P->next = S.first;
         (P->next)->prev = P;
-        A.first = P;
+        S.first = P;
     }
 }
 
