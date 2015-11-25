@@ -1,84 +1,197 @@
 #include "head.h"
+#include <iostream>
+#include <conio.h>
+#include <stdlib.h>
+using namespace std;
 
-void addAkun (list_akun &A)
-{
-    first(A)=NULL;
+// Bagian menu
+void menu_1(list_akun &Akun){
+    infotype_akun detail_akun;
+
+    detail_akun.id_akun=1;
+    cout<<"Masukkan nama anda       : ";cin>>detail_akun.nama;
+    cout<<"Masukkan tgl lahir anda  : ";cin>>detail_akun.tgl_lahir;
+    cout<<"Masukkan usernam anda    : ";cin>>detail_akun.username;
+    cout<<"Masukkan password anda   : ";cin>>detail_akun.password;
+    addAkun(Akun, detail_akun);
 }
 
-address_akun alokasi_akun (infotype_akun x)
-{
+void menu_2(list_akun &Akun, list_status &Status){
+    string uname, pass;
+    address_akun pointer = Akun.first;
+    bool berhasil = false;
+    int menu_akun = 0;
 
-    address_akun A = new elmakun;
-    A->info_akun= x;
-    next(A) = NULL;
-    prev(A) = NULL;
-    return A;
-}
-void insertFirstAkun (list_akun &A, address_akun P)
-{
-    {
-    if(first(A)==NULL)
-    {
 
-        first(A)=P;
-        next(first(A))=NULL;
-        next(P)=first(A);
-    }
-    else
-    {
-        next(P)=NULL;
-        first(A)=P;
-    }
-    }
-}
-
-void insertLastAkun (list_akun &A, address_akun P)
-{
-    address_akun Q;
-    Q=first(A);
-    if(Q==NULL)
-    {
-        first(A)=P;
-        next(first(A))=NULL;
-    }
-    else
-    {
-        while(next(Q)!=NULL)
-        {
-            Q=next(Q);
+    cout<<"Masukkan username anda : ";cin>>uname;
+    cout<<"Masukkan password anda : ";cin>>pass;
+    while (pointer != NULL){
+        if (uname == pointer->info_akun.username && pass== pointer->info_akun.password){
+            cout<<"Berhasil Log In"<<endl;
+            berhasil = true;
+            break;
         }
-        next(P)=NULL;
-        next(Q)=P;
+        pointer = pointer->next;
+    }
+    if (berhasil == false ){
+        cout<<"Akun tidak terdaftar/ username salah"<<endl;
+    }
+    getch();
+    while (berhasil){
+        cout<<"============ Menu Akun ============"<<endl
+            <<"1. Tulis Status"<<endl
+            <<"2. view All Status "<<endl
+            <<"3. Edit Akun "<<endl
+            <<"4. Log Out"<<endl
+            <<"Pilihan Anda : ";cin>>menu_akun;
+            switch (menu_akun){
+            case 1:
+                addStatus(Akun,Status);
+                break;
+            case 2:
+                viewStatus(Akun,Status);
+                break;
+            case 3:
+                editAkun(Akun);
+                break;
+            case 4:
+                berhasil = false;
+            }
     }
 }
 
-void addStatus (list_status &S)
-{
-    first(S)=NULL;
-    last(S)=NULL;
+// Bagian Create List
+void createListAkun(list_akun &Akun){
+    Akun.first = NULL;
 }
 
-void deletefirst_akun(list_akun &A,address_akun &P)
-{
+void createListStatus(list_status &Status){
+    Status.first = NULL;
+    Status.last = NULL;
+}
 
-    P=first(A);
-    if(P==NULL)
+// Bagian Akun
+void addAkun(list_akun &Akun, infotype_akun detail_akun){
+    address_akun new_akun = new elmakun;
+    new_akun->info_akun = detail_akun;
+    if (Akun.first == NULL){
+        insertFirstAkun(Akun, new_akun);
+    }
+    else {
+        insertLastAkun(Akun, new_akun);
+    }
+    //cout<<Akun.first->info_akun.tgl_lahir;
+}
+
+void insertFirstAkun(list_akun &Akun, address_akun new_akun){
+    Akun.first = new_akun;
+    new_akun->next = NULL;
+}
+
+void insertLastAkun(list_akun &Akun, address_akun new_akun){
+    address_akun P = Akun.first;
+    while (P->next != NULL){
+        P = P->next;
+    }
+    P->next = new_akun;
+}
+
+void insertNextAkun(list_akun &Akun,address_akun Pointer, infotype_akun detail_akun){
+
+}
+
+address_akun deleteAkun(list_akun &Akun){
+
+}
+
+address_akun deleteFirstAkun(list_akun &Akun){
+    address_akun P = Akun.first;
+
+    if(P == NULL)
     {
         cout<<"Data Kosong"<<endl;
     }
     else
     {
-        first(A)=next(first(A));
-        next(P)=NULL;
-        cout<<"ID Akun yang dihapus "<<info_akun(P).id_akun<<endl;
+        Akun.first=Akun.first->next;
+        P->next=NULL;
+        cout<<"ID Akun yang dihapus "<<P->info_akun.id_akun<<endl;
+        return P;
     }
 }
 
-void deleteLast_status(list_status &S,address_status *P)
-{
-    P=last(S);
-    last(S)=prev(last(S));
-    prev(P)=NULL;
-    next(last(S))=NULL;
-    cout<<"ID Status yang dihapus "<<info_status(P).id_status<<endl;
+address_akun deleteLastAkun(list_akun &Akun){
+
+}
+
+address_akun deleteNextAkun(list_akun &Akun, infotype_akun detail_akun){
+
+}
+
+void editAkun(list_akun &Akun){
+    int cari;
+    address_akun Pointer = Akun.first;
+    cout<<"Masukkan id akun yang ingin anda cari ";cin>>cari;
+    while (Pointer != NULL){
+        if (cari == Pointer->info_akun.id_akun){
+            cout<<"Data ada !"<<endl;
+            cout<<"Masukkan nama anda : ";cin>>Pointer->info_akun.nama;
+            cout<<"Masukkan tanggal lahir anda : ";cin>>Pointer->info_akun.tgl_lahir;
+            cout<<"Masukkan username baru : ";cin>>Pointer->info_akun.username;
+            cout<<"Masukkan password baru : ";cin>>Pointer->info_akun.password;
+            break;
+        }
+        Pointer = Pointer->next;
+    }
+    cout<<"Data tidak ditemukan !!"<<endl<<endl;
+}
+
+void sort_akun(list_akun &Akun){
+    address_akun pointer = Akun.first;
+    address_akun next_point = Akun.first->next;
+    int min_id;
+
+    while (pointer != NULL){
+
+    }
+}
+
+
+int count_akun(list_akun Akun){
+    address_akun Pointer = Akun.first;
+    int jumlah=0;
+
+    while (Pointer != NULL){
+        jumlah++;
+        Pointer = Pointer->next;
+    }
+    return jumlah;
+}
+
+// Bagian status
+
+void addStatus(list_akun &Akun, list_status &Status){
+
+}
+
+void viewStatus(list_akun Akun, list_status Status){
+
+}
+
+void findStatus(list_status S, string tanggal){
+
+}
+
+void sort_status(list_status &Status){
+
+}
+
+address_status deleteLastStatus(list_status &Status){
+    address_status P=Status.last;
+
+    Status.last =Status.last->prev;
+    P->prev =NULL;
+    Status.last->next =NULL;
+    cout<<"ID Status yang dihapus "<<P->info_status.id_status<<endl;
+    return P;
 }
