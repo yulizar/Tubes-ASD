@@ -11,7 +11,8 @@ struct infotype_akun {
 };
 
 struct infotype_status {
-    string id_status, tanggal, status;
+    string tanggal, status;
+    int id_status;
 };
 typedef struct elmakun *address_akun;
 typedef struct elmstatus *address_status;
@@ -40,33 +41,34 @@ struct list_akun {
 void menu_1(list_akun &);
 void menu_2(list_akun &, list_status &);
 
-void createListAkun (list_akun &);
-void createListStatus (list_status &);
-void addAkun (list_akun &, infotype_akun);
-void findAkun (list_akun );
-void editAkun (list_akun &);
-void addStatus (list_akun &, list_status &);
-void findStatus (list_status ,string);
-void viewStatus (list_akun, list_status);
+void createListAkun (list_akun &);///done
+void createListStatus (list_status &);///done
+void addAkun (list_akun &, infotype_akun);///done
+address_akun findAkun (list_akun , int);///done
+void editAkun (list_akun &);///done
+void addStatus (address_akun , list_status &);
+address_status findStatus (list_status ,string);///done
+void viewAkun(list_akun);///done
+void viewStatus (list_akun, list_status);///done
 int count_akun (list_akun);
-int count_status (list_akun,list_status);
+int count_status (list_status);
 void sort_akun (list_akun &);
 void sort_status (list_status &);
 
-void insertFirstStatus (list_status &);
-void insertNextStatus (list_status &);
-void insertLastStatus (list_status &);
+void insertFirstStatus (list_status &,address_status);///done
+void insertNextStatus (list_status &, address_status, address_status);///done
+void insertLastStatus (list_status &, address_status);///done
 address_status deleteLastStatus (list_status &);
 address_status deleteFirstStatus (list_status &);
-address_status deleteNextStatus (list_status &, infotype_status);
-address_status deleteStatus (list_akun &, list_status);
+address_status deleteNextStatus (list_status &);
+void deleteStatus (list_status &);
 
 
-void insertFirstAkun (list_akun &, address_akun);
-void insertNextAkun  (list_akun &, address_akun, infotype_akun);
-void insertLastAkun  (list_akun &, address_akun);
-address_akun deleteFirstAkun (list_akun &);
-address_akun deleteNextAkun (list_akun &, infotype_akun);
-address_akun deleteLastAkun (list_akun &);
-address_akun deleteAkun (list_akun &);
+void insertFirstAkun (list_akun &, address_akun);///done
+void insertNextAkun  (list_akun &, address_akun,address_akun);///done
+void insertLastAkun  (list_akun &, address_akun);///done
+address_akun deleteFirstAkun (list_akun &);///done
+address_akun deleteNextAkun (list_akun &, int);///done
+address_akun deleteLastAkun (list_akun &);///done
+void deleteAkun (list_akun &);///done
 #endif //HEAD_H_INCLUDED
